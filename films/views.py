@@ -1,3 +1,4 @@
+from django.db.models import Avg
 from rest_framework import viewsets, generics
 from rest_framework.authtoken.models import Token
 from rest_framework.generics import get_object_or_404
@@ -12,7 +13,8 @@ class FilmViewSet(viewsets.ReadOnlyModelViewSet):
     """
     电影
     """
-    queryset = Film.objects.all()
+    # 查询集还包含该电影的平均评分
+    queryset = Film.objects.annotate(average_rating=Avg('review__rating'))
     serializer_class = FilmSerializer
     filter_backends = [FilmSearchFilter]
     search_fields = ['name', 'tags__name', 'directors__name', 'actors__name']

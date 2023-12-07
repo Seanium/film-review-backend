@@ -4,6 +4,7 @@ from films.models import *
 
 
 class FilmSerializer(serializers.ModelSerializer):
+    average_rating = serializers.FloatField(read_only=True)
     tags = serializers.StringRelatedField(many=True)
     directors = serializers.StringRelatedField(many=True)
     actors = serializers.StringRelatedField(many=True)
