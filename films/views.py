@@ -17,7 +17,7 @@ class FilmViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Film.objects.annotate(average_rating=Avg('review__rating'))
     serializer_class = FilmSerializer
     filter_backends = [FilmSearchFilter]
-    search_fields = ['name', 'tags__name', 'directors__name', 'actors__name']
+    search_fields = ['name', 'tags__name', 'directors__name', 'actors__name', 'language__name', 'country__name']
 
 
 class TagViewSet(viewsets.ReadOnlyModelViewSet):

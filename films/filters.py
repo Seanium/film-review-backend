@@ -11,4 +11,8 @@ class FilmSearchFilter(filters.SearchFilter):
             return ['directors__name']
         elif request.query_params.get('actors_only'):
             return ['actors__name']
+        elif request.query_params.get('language_only'):
+            return ['language__name']
+        elif request.query_params.get('country_only'):
+            return ['country__name']
         return super(FilmSearchFilter, self).get_search_fields(view, request)
