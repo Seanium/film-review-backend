@@ -42,10 +42,12 @@ INSTALLED_APPS = [
     'drf_yasg',
     'users',
     'films',
-    'reviews'
+    'reviews',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # 跨域
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -54,6 +56,14 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# 跨域
+CORS_ORIGIN_ALLOW_ALL = True  # 允许所有的请求源
+CORS_ALLOW_CREDENTIALS = True  # 允许携带cookie
+
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:8080',  # 允许前端的请求源
+)
 
 ROOT_URLCONF = 'db_backend.urls'
 

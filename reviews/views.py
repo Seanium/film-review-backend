@@ -2,16 +2,7 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import Review, Favorite
-from .serializers import ReviewSerializer, FavoriteSerializer
-
-
-class ReviewViewSet(viewsets.ModelViewSet):
-    """
-    电影的评论
-    """
-    queryset = Review.objects.all()
-    serializer_class = ReviewSerializer
+from .serializers import *
 
 
 class FavoriteViewSet(viewsets.ModelViewSet):
@@ -22,24 +13,59 @@ class FavoriteViewSet(viewsets.ModelViewSet):
     serializer_class = FavoriteSerializer
 
 
-class UserReviewsAPIView(APIView):
+class ReviewViewSet(viewsets.ModelViewSet):
     """
-    用户的评论
+    短评
     """
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
 
-    def get(self, request, user_id):
-        """
-        获取用户的评论
-        """
-        reviews = Review.objects.filter(user_id=user_id)
-        serializer = ReviewSerializer(reviews, many=True)
-        return Response(serializer.data)
+
+class ReviewLikesViewSet(viewsets.ModelViewSet):
+    """
+    短评点赞
+    """
+    queryset = ReviewLike.objects.all()
+    serializer_class = ReviewLikeSerializer
+
+
+class ReviewCommentsViewSet(viewsets.ModelViewSet):
+    """
+    短评评论
+    """
+    queryset = ReviewComment.objects.all()
+    serializer_class = ReviewCommentSerializer
+
+
+class ArticleViewSet(viewsets.ModelViewSet):
+    """
+    长评
+    """
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+
+
+class ArticleLikesViewSet(viewsets.ModelViewSet):
+    """
+    长评点赞
+    """
+    queryset = ArticleLike.objects.all()
+    serializer_class = ArticleLikeSerializer
+
+
+class ArticleCommentsViewSet(viewsets.ModelViewSet):
+    """
+    长评评论
+    """
+    queryset = ArticleComment.objects.all()
+    serializer_class = ArticleCommentSerializer
 
 
 class UserFavoritesAPIView(APIView):
     """
-    用户的收藏
+    用户的收藏，仅支持get
     """
+
     def get(self, request, user_id):
         """
         获取用户的收藏
@@ -49,27 +75,115 @@ class UserFavoritesAPIView(APIView):
         return Response(serializer.data)
 
 
-class FilmReviewsAPIView(APIView):
+class UserReviewsAPIView(APIView):
     """
-    电影的评论
+    用户的短评，仅支持get
     """
+
+    def get(self, request, user_id):
+        """
+        获取用户的短评
+        """
+        reviews = Review.objects.filter(user_id=user_id)
+        serializer = ReviewSerializer(reviews, many=True)
+        return Response(serializer.data)
+
+
+class UserArticlesAPIView(APIView):
+    """
+    用户的长评，仅支持get
+    """
+
+    def get(self, request, user_id):
+        """
+        获取用户的长评
+        """
+        articles = Article.objects.filter(user_id=user_id)
+        serializer = ArticleSerializer(articles, many=True)
+        return Response(serializer.data)
+
+
+class FilmFavoritesAPIView(APIView):
+    """
+    电影的被收藏记录，仅支持get
+    """
+
     def get(self, request, film_id):
         """
-        获取电影的评论
+        获取电影的被收藏记录
+        """
+        favorites = Favorite.objects.filter(film_id=film_id)
+        serializer = FavoriteSerializer(favorites, many=True)
+        return Response(serializer.data)
+
+
+class FilmReviewsAPIView(APIView):
+    """
+    电影的短评，仅支持get
+    """
+
+    def get(self, request, film_id):
+        """
+        获取电影的短评
         """
         reviews = Review.objects.filter(film_id=film_id)
         serializer = ReviewSerializer(reviews, many=True)
         return Response(serializer.data)
 
 
-class FilmFavoritesAPIView(APIView):
+class FilmArticlesAPIView(APIView):
     """
-    电影的收藏
+    电影的长评，仅支持get
     """
+
     def get(self, request, film_id):
         """
-        获取电影的收藏
+        获取电影的长评
         """
-        favorites = Favorite.objects.filter(film_id=film_id)
-        serializer = FavoriteSerializer(favorites, many=True)
+        articles = Article.objects.filter(film_id=film_id)
+        serializer = ArticleSerializer(articles, many=True)
+        return Response(serializer.data)
+
+
+class ReviewLikesAPIView(APIView):
+    """
+    短评的点赞，仅支持get
+    """
+
+    def get(self, request, review_id):
+        review_likes = ReviewLike.objects.filter(review_id=review_id)
+        serializer = ReviewLikeSerializer(review_likes, many=True)
+        return Response(serializer.data)
+
+
+class ReviewCommentsAPIView(APIView):
+    """
+    短评的评论，仅支持get
+    """
+
+    def get(self, request, review_id):
+        review_comments = ReviewComment.objects.filter(review_id=review_id)
+        serializer = ReviewCommentSerializer(review_comments, many=True)
+        return Response(serializer.data)
+
+
+class ArticleLikesAPIView(APIView):
+    """
+    长评的点赞，仅支持get
+    """
+
+    def get(self, request, article_id):
+        article_likes = ArticleLike.objects.filter(article_id=article_id)
+        serializer = ArticleLikeSerializer(article_likes, many=True)
+        return Response(serializer.data)
+
+
+class ArticleCommentsAPIView(APIView):
+    """
+    长评的评论，仅支持get
+    """
+
+    def get(self, request, article_id):
+        article_comments = ArticleComment.objects.filter(article_id=article_id)
+        serializer = ArticleCommentSerializer(article_comments, many=True)
         return Response(serializer.data)

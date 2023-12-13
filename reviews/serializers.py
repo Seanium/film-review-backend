@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Review, Favorite
+from .models import *
 from users.models import UserProfile
 
 
@@ -14,7 +14,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Review
-        fields = ['id', 'user', 'user_profile', 'film', 'comment', 'rating', 'time']
+        fields = ['id', 'user', 'user_profile', 'film', 'content', 'rating', 'time']
 
 
 class FavoriteSerializer(serializers.ModelSerializer):
@@ -23,3 +23,43 @@ class FavoriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Favorite
         fields = ['id', 'user', 'user_profile', 'film', 'time']
+
+
+class ReviewLikeSerializer(serializers.ModelSerializer):
+    user_profile = UserProfileSerializer(source='user.userprofile', read_only=True)
+
+    class Meta:
+        model = ReviewLike
+        fields = ['id', 'user', 'user_profile', 'review', 'time']
+
+
+class ReviewCommentSerializer(serializers.ModelSerializer):
+    user_profile = UserProfileSerializer(source='user.userprofile', read_only=True)
+
+    class Meta:
+        model = ReviewComment
+        fields = ['id', 'user', 'user_profile', 'review', 'content', 'time']
+
+
+class ArticleSerializer(serializers.ModelSerializer):
+    user_profile = UserProfileSerializer(source='user.userprofile', read_only=True)
+
+    class Meta:
+        model = Article
+        fields = ['id', 'user', 'user_profile', 'film', 'content', 'time']
+
+
+class ArticleLikeSerializer(serializers.ModelSerializer):
+    user_profile = UserProfileSerializer(source='user.userprofile', read_only=True)
+
+    class Meta:
+        model = ArticleLike
+        fields = ['id', 'user', 'user_profile', 'article', 'time']
+
+
+class ArticleCommentSerializer(serializers.ModelSerializer):
+    user_profile = UserProfileSerializer(source='user.userprofile', read_only=True)
+
+    class Meta:
+        model = ArticleComment
+        fields = ['id', 'user', 'user_profile', 'article', 'content', 'time']

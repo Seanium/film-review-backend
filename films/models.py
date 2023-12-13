@@ -48,6 +48,9 @@ class Language(models.Model):
 
 # 出版国家
 class Country(models.Model):
+    class Meta:
+        verbose_name_plural = 'Countries'
+
     name = models.CharField(max_length=255, unique=True)
 
     def __str__(self):
