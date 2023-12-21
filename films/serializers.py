@@ -8,6 +8,8 @@ class FilmSerializer(serializers.ModelSerializer):
     tags = serializers.StringRelatedField(many=True)
     directors = serializers.StringRelatedField(many=True)
     actors = serializers.StringRelatedField(many=True)
+    language = serializers.StringRelatedField()
+    country = serializers.StringRelatedField()
 
     class Meta:
         model = Film
