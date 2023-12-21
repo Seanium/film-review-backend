@@ -13,6 +13,10 @@ class RegisterAPIView(APIView):
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            # 创建user_profile
+            user = serializer.instance
+            user_profile = UserProfile(user=user)
+            user_profile.save()
             return Response({'message': '注册成功'})
         return Response(serializer.errors, status=400)
 

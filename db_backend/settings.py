@@ -68,6 +68,7 @@ CORS_ALLOW_CREDENTIALS = True  # 允许携带cookie
 
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:8080',  # 允许前端的请求源
+    'http://127.0.0.1:8080'
 )
 
 ROOT_URLCONF = 'db_backend.urls'
