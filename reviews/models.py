@@ -25,6 +25,8 @@ class Review(models.Model):
     content = models.TextField()
     rating = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
     time = models.DateTimeField(auto_now_add=True)
+    # 看过与否，分为0,1两个等级，0表示未看过，1表示已看过
+    watched = models.PositiveIntegerField(validators=[MinValueValidator(0), MaxValueValidator(1)])
 
     def __str__(self):
         return self.user.username + ' - ' + self.film.name + ' - ' + str(self.time)
@@ -61,6 +63,15 @@ class Article(models.Model):
     """
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     film = models.ForeignKey(Film, on_delete=models.CASCADE)
+    rating = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+    # 剧透提醒，分为0,1,2三个等级，0表示无剧透，1表示轻度剧透，2表示重度剧透
+    spoiler = models.PositiveIntegerField(validators=[MinValueValidator(0), MaxValueValidator(2)])
+    # 隐私设置，分为0,1两个等级，0表示仅自己可见，1表示所有人可见
+    privacy = models.PositiveIntegerField(validators=[MinValueValidator(0), MaxValueValidator(1)])
+    # 是否原创，分为0,1两个等级，0表示有参考，1表示原创
+    original = models.PositiveIntegerField(validators=[MinValueValidator(0), MaxValueValidator(1)])
+    # 标题
+    title = models.CharField(max_length=255)
     content = models.TextField()
     time = models.DateTimeField(auto_now_add=True)
 

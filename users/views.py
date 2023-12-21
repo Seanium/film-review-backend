@@ -21,6 +21,7 @@ class UserProfileView(APIView):
     """
     用户信息
     """
+
     def get(self, request, pk):
         """
         获取用户信息
@@ -31,12 +32,8 @@ class UserProfileView(APIView):
 
     def post(self, request, pk):
         """
-        更新用户信息。需要提供有效的Token
+        更新用户信息。
         """
-        # 检查是否提供了有效的Token
-        if not request.auth:
-            return Response({"error": "未提供Token"}, status=401)
-
         profile = get_object_or_404(UserProfile, user=pk)
         serializer = UserProfileSerializer(profile, data=request.data)
         if serializer.is_valid():

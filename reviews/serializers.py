@@ -14,7 +14,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Review
-        fields = ['id', 'user', 'user_profile', 'film', 'content', 'rating', 'time']
+        fields = ['id', 'user', 'user_profile', 'film', 'content', 'rating', 'time', 'watched']
 
 
 class FavoriteSerializer(serializers.ModelSerializer):
@@ -46,7 +46,8 @@ class ArticleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Article
-        fields = ['id', 'user', 'user_profile', 'film', 'content', 'time']
+        fields = ['id', 'user', 'user_profile', 'film', 'rating', 'title', 'content', 'time', 'spoiler',
+                  'privacy', 'original']
 
 
 class ArticleLikeSerializer(serializers.ModelSerializer):
