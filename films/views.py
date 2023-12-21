@@ -2,6 +2,7 @@ from django.db.models import Avg
 from rest_framework import viewsets, generics
 from rest_framework.authtoken.models import Token
 from rest_framework.generics import get_object_or_404
+from rest_framework import filters
 
 from films.filters import FilmSearchFilter
 from films.models import Film, Tag, Director, Actor
@@ -16,7 +17,7 @@ class FilmViewSet(viewsets.ReadOnlyModelViewSet):
     # 查询集还包含该电影的平均评分
     queryset = Film.objects.annotate(average_rating=Avg('review__rating'))
     serializer_class = FilmSerializer
-    filter_backends = [FilmSearchFilter]
+    filter_backends = [FilmSearchFilter, filters.OrderingFilter]
     search_fields = ['name', 'tags__name', 'directors__name', 'actors__name', 'language__name', 'country__name']
 
 
@@ -26,6 +27,7 @@ class TagViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
+    filter_backends = [filters.OrderingFilter]
 
 
 class DirectorViewSet(viewsets.ReadOnlyModelViewSet):
@@ -34,6 +36,7 @@ class DirectorViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = Director.objects.all()
     serializer_class = DirectorSerializer
+    filter_backends = [filters.OrderingFilter]
 
 
 class ActorViewSet(viewsets.ReadOnlyModelViewSet):
@@ -42,6 +45,7 @@ class ActorViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = Actor.objects.all()
     serializer_class = ActorSerializer
+    filter_backends = [filters.OrderingFilter]
 
 
 class FilmRecommendView(generics.ListAPIView):
@@ -49,6 +53,7 @@ class FilmRecommendView(generics.ListAPIView):
     推荐的电影。若传入有效的 token，则根据用户喜好推荐电影；否则返回全部电影
     """
     serializer_class = FilmSerializer
+    filter_backends = [filters.OrderingFilter]
 
     def get_queryset(self):
         # 检查是否传入了有效的 token
@@ -73,6 +78,7 @@ class ActorFilmViewSet(viewsets.ReadOnlyModelViewSet):
     该演员的全部电影
     """
     serializer_class = FilmSerializer
+    filter_backends = [filters.OrderingFilter]
 
     def get_queryset(self):
         actor_id = self.kwargs['actor_id']
@@ -85,6 +91,7 @@ class DirectorFilmViewSet(viewsets.ReadOnlyModelViewSet):
     该导演的全部电影
     """
     serializer_class = FilmSerializer
+    filter_backends = [filters.OrderingFilter]
 
     def get_queryset(self):
         director_id = self.kwargs['director_id']
@@ -97,6 +104,7 @@ class TagFilmViewSet(viewsets.ReadOnlyModelViewSet):
     标签下的全部电影
     """
     serializer_class = FilmSerializer
+    filter_backends = [filters.OrderingFilter]
 
     def get_queryset(self):
         tag_id = self.kwargs['tag_id']
