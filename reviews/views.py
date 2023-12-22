@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .serializers import *
+from django.db.models import Count
 
 
 class FavoriteViewSet(viewsets.ModelViewSet):
@@ -21,6 +22,12 @@ class ReviewViewSet(viewsets.ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
     filter_backends = [filters.OrderingFilter]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        # 包括短评点赞数和短评评论数
+        queryset = queryset.annotate(like_count=Count('reviewlike'), comment_count=Count('reviewcomment'))
+        return queryset
 
 
 class ReviewLikesViewSet(viewsets.ModelViewSet):
@@ -48,6 +55,11 @@ class ArticleViewSet(viewsets.ModelViewSet):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
     filter_backends = [filters.OrderingFilter]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.annotate(like_count=Count('articlelike'), comment_count=Count('articlecomment'))
+        return queryset
 
 
 class ArticleLikesViewSet(viewsets.ModelViewSet):
@@ -89,7 +101,9 @@ class UserReviewsAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         user_id = self.kwargs['user_id']
-        return Review.objects.filter(user_id=user_id)
+        queryset = Review.objects.filter(user_id=user_id)
+        queryset = queryset.annotate(like_count=Count('reviewlike'), comment_count=Count('reviewcomment'))
+        return queryset
 
 
 class UserArticlesAPIView(generics.ListAPIView):
@@ -101,7 +115,9 @@ class UserArticlesAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         user_id = self.kwargs['user_id']
-        return Article.objects.filter(user_id=user_id)
+        queryset = Article.objects.filter(user_id=user_id)
+        queryset = queryset.annotate(like_count=Count('articlelike'), comment_count=Count('articlecomment'))
+        return queryset
 
 
 class FilmFavoritesAPIView(generics.ListAPIView):
@@ -125,7 +141,9 @@ class FilmReviewsAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         film_id = self.kwargs['film_id']
-        return Review.objects.filter(film_id=film_id)
+        queryset = Review.objects.filter(film_id=film_id)
+        queryset = queryset.annotate(like_count=Count('reviewlike'), comment_count=Count('reviewcomment'))
+        return queryset
 
 
 class FilmArticlesAPIView(generics.ListAPIView):
@@ -137,7 +155,9 @@ class FilmArticlesAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         film_id = self.kwargs['film_id']
-        return Article.objects.filter(film_id=film_id)
+        queryset = Article.objects.filter(film_id=film_id)
+        queryset = queryset.annotate(like_count=Count('articlelike'), comment_count=Count('articlecomment'))
+        return queryset
 
 
 class ReviewLikesAPIView(generics.ListAPIView):

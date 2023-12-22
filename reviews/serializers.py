@@ -11,10 +11,13 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 class ReviewSerializer(serializers.ModelSerializer):
     user_profile = UserProfileSerializer(source='user.userprofile', read_only=True)
+    like_count = serializers.IntegerField(read_only=True)
+    comment_count = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Review
-        fields = ['id', 'user', 'user_profile', 'film', 'content', 'rating', 'time', 'watched']
+        fields = ['id', 'user', 'user_profile', 'film', 'content', 'rating', 'time', 'watched', 'like_count',
+                  'comment_count']
 
 
 class FavoriteSerializer(serializers.ModelSerializer):
@@ -43,11 +46,13 @@ class ReviewCommentSerializer(serializers.ModelSerializer):
 
 class ArticleSerializer(serializers.ModelSerializer):
     user_profile = UserProfileSerializer(source='user.userprofile', read_only=True)
+    like_count = serializers.IntegerField(read_only=True)
+    comment_count = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Article
         fields = ['id', 'user', 'user_profile', 'film', 'rating', 'title', 'content', 'time', 'spoiler',
-                  'privacy', 'original']
+                  'privacy', 'original', 'like_count', 'comment_count']
 
 
 class ArticleLikeSerializer(serializers.ModelSerializer):
