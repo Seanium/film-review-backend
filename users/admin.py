@@ -14,7 +14,9 @@ class UserProfileResource(resources.ModelResource):
 
 @admin.register(UserProfile)
 class UserProfileAdmin(ImportExportModelAdmin):
-    list_display = ('user', 'avatar')
-    list_filter = ('user',)
-    search_fields = ('user',)
+    list_display = ('user', 'avatar', 'nickname', 'gender', 'phone', 'occupation', 'signature', 'age', 'email',
+                    'location', 'hobby')
+    list_filter = ('user', 'gender', 'age', 'location')
+    search_fields = ('user', 'nickname', 'gender', 'phone', 'occupation', 'signature', 'age', 'email',
+                     'location', 'hobby')
     resource_class = UserProfileResource

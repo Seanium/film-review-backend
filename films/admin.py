@@ -15,12 +15,21 @@ class FilmResource(resources.ModelResource):
 
 @admin.register(Film)
 class FilmAdmin(ImportExportModelAdmin):
-    list_display = ('id', 'name', 'duration', 'release_date', 'info', 'cover', 'display_tags', 'language', 'country')
+    list_display = (
+        'id', 'name', 'duration', 'release_date', 'info', 'cover', 'display_tags', 'display_directors',
+        'display_actors', 'language',
+        'country')
     list_filter = ('name', 'duration', 'release_date', 'tags', 'language', 'country')
     search_fields = ('name', 'duration', 'release_date', 'tags', 'language', 'country')
 
     def display_tags(self, obj):
         return ', '.join(tag.name for tag in obj.tags.all())
+
+    def display_directors(self, obj):
+        return ', '.join(director.name for director in obj.directors.all())
+
+    def display_actors(self, obj):
+        return ', '.join(actor.name for actor in obj.actors.all())
 
     display_tags.short_description = 'Tags'
     resource_class = FilmResource
@@ -46,8 +55,8 @@ class DirectorResource(resources.ModelResource):
 
 @admin.register(Director)
 class DirectorAdmin(ImportExportModelAdmin):
-    list_display = ('id', 'name',)
-    list_filter = ('name',)
+    list_display = ('id', 'name', 'photo', 'birth_date', 'birth_place', 'info')
+    list_filter = ('name', 'birth_date', 'birth_place')
     search_fields = ('name',)
     resource_class = DirectorResource
 
@@ -59,8 +68,8 @@ class ActorResource(resources.ModelResource):
 
 @admin.register(Actor)
 class ActorAdmin(ImportExportModelAdmin):
-    list_display = ('id', 'name',)
-    list_filter = ('name',)
+    list_display = ('id', 'name', 'photo', 'birth_date', 'birth_place', 'info')
+    list_filter = ('name', 'birth_date', 'birth_place')
     search_fields = ('name',)
     resource_class = ActorResource
 

@@ -13,9 +13,9 @@ class ReviewResource(resources.ModelResource):
 
 @admin.register(Review)
 class ReviewAdmin(ImportExportModelAdmin):
-    list_display = ('id', 'user', 'film', 'content', 'rating', 'time')
-    list_filter = ('user', 'film', 'rating', 'time')
-    search_fields = ('user', 'film', 'rating', 'time')
+    list_display = ('id', 'user', 'film', 'content', 'rating', 'watched', 'time')
+    list_filter = ('user', 'film', 'rating', 'watched', 'time')
+    search_fields = ('user', 'film', 'rating', 'watched', 'time')
     resource_class = ReviewResource
 
 
@@ -65,9 +65,9 @@ class ArticleResource(resources.ModelResource):
 
 @admin.register(Article)
 class ArticleAdmin(ImportExportModelAdmin):
-    list_display = ('id', 'user', 'film', 'content', 'time')
-    list_filter = ('user', 'film', 'time')
-    search_fields = ('user', 'film', 'time')
+    list_display = ('id', 'user', 'film', 'title', 'content', 'rating', 'spoiler', 'privacy', 'original', 'time')
+    list_filter = ('user', 'film', 'rating', 'spoiler', 'privacy', 'original', 'time')
+    search_fields = ('user', 'film', 'rating', 'spoiler', 'privacy', 'original', 'time')
     resource_class = ArticleResource
 
 
