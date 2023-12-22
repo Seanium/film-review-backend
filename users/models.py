@@ -4,9 +4,9 @@ from django.contrib.auth.models import User
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(upload_to='static/image/avatars/', unique=True, null=True, blank=True)
+    avatar = models.ImageField(upload_to='static/image/avatars/', null=True, blank=True)
     # 昵称
-    nickname = models.CharField(max_length=255, unique=True, null=True, blank=True)
+    nickname = models.CharField(max_length=255, null=True, blank=True)
     # 性别
     gender = models.CharField(max_length=255, null=True, blank=True)
     # 手机号码
