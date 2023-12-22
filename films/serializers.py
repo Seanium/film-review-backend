@@ -3,19 +3,6 @@ from rest_framework import serializers
 from films.models import *
 
 
-class FilmSerializer(serializers.ModelSerializer):
-    average_rating = serializers.FloatField(read_only=True)
-    tags = serializers.StringRelatedField(many=True)
-    directors = serializers.StringRelatedField(many=True)
-    actors = serializers.StringRelatedField(many=True)
-    language = serializers.StringRelatedField()
-    country = serializers.StringRelatedField()
-
-    class Meta:
-        model = Film
-        fields = '__all__'
-
-
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
@@ -31,4 +18,29 @@ class DirectorSerializer(serializers.ModelSerializer):
 class ActorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Actor
+        fields = '__all__'
+
+
+class LanguageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Language
+        fields = '__all__'
+
+
+class CountrySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Country
+        fields = '__all__'
+
+
+class FilmSerializer(serializers.ModelSerializer):
+    average_rating = serializers.FloatField(read_only=True)
+    tags = TagSerializer(many=True)
+    directors = DirectorSerializer(many=True)
+    actors = ActorSerializer(many=True)
+    language = LanguageSerializer()
+    country = CountrySerializer()
+
+    class Meta:
+        model = Film
         fields = '__all__'
