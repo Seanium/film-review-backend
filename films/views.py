@@ -1,3 +1,4 @@
+from django.db.models import Case, When, Value, IntegerField
 from rest_framework import viewsets, generics
 from rest_framework.authtoken.models import Token
 from rest_framework.generics import get_object_or_404
@@ -48,27 +49,33 @@ class ActorViewSet(viewsets.ReadOnlyModelViewSet):
 
 class FilmRecommendView(generics.ListAPIView):
     """
-    推荐的电影。若传入有效的 token，则根据用户喜好推荐电影；否则返回全部电影
+    推荐的电影。若传入用户id，根据用户喜好推荐电影；若未传入用户id，则返回全部电影
     """
     serializer_class = FilmSerializer
     filter_backends = [filters.OrderingFilter]
 
     def get_queryset(self):
-        # 检查是否传入了有效的 token
-        authorization_header = self.request.headers.get('Authorization')
-        if authorization_header:
-            token = authorization_header.split(' ')[1]
+        user_id = self.request.query_params.get('user_id')
+        if user_id:
             try:
-                user = Token.objects.get(key=token).user
+                user = Token.objects.get(user=user_id).user
                 # 根据用户喜好推荐电影
                 favorite_films = Favorite.objects.filter(user=user).values_list('film', flat=True)
-                queryset = Film.objects.filter(tags__films__in=favorite_films).distinct()
+                favorite_films_queryset = Film.objects.filter(id__in=favorite_films)
+                tail_films = Film.objects.exclude(id__in=favorite_films)
+                # 创建Case语句来排序电影
+                ordering = Case(
+                    *[When(pk=pk, then=Value(i)) for i, pk in enumerate(favorite_films)],
+                    default=Value(len(favorite_films)),
+                    output_field=IntegerField()
+                )
+                # 合并并排序
+                queryset = (favorite_films_queryset | tail_films).order_by(ordering)
                 return queryset
             except (Token.DoesNotExist, IndexError):
                 pass
-
-        # 如果 token 不存在或无效，则返回全部电影
-        return Film.objects.all()
+        else:
+            return Film.objects.all()
 
 
 class ActorFilmViewSet(viewsets.ReadOnlyModelViewSet):

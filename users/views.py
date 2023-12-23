@@ -7,9 +7,9 @@ from .serializers import RegisterSerializer, UserProfileSerializer
 
 
 class LoginAPIView(APIView):
-    '''
+    """
     登录成功时返回user的id和token
-    '''
+    """
 
     def post(self, request):
         username = request.data.get('username')

@@ -9,17 +9,17 @@ from users.models import UserProfile
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_auth_token(sender, instance=None, created=False, **kwargs):
-    '''
+    """
     在创建user时，自动创建token
-    '''
+    """
     if created:
         Token.objects.create(user=instance)
 
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance=None, created=False, **kwargs):
-    '''
+    """
     在创建user时，自动创建user profile
-    '''
+    """
     if created:
         UserProfile.objects.create(user=instance)
