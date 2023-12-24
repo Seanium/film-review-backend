@@ -1,12 +1,7 @@
 from rest_framework import serializers
+
+from users.serializers import UserProfileSerializer
 from .models import *
-from users.models import UserProfile
-
-
-class UserProfileSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = UserProfile
-        fields = '__all__'
 
 
 class ReviewSerializer(serializers.ModelSerializer):

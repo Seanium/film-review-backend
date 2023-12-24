@@ -63,6 +63,10 @@ MIDDLEWARE = [
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+# 媒体文件
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # 跨域
 CORS_ORIGIN_ALLOW_ALL = True  # 允许所有的请求源
 CORS_ALLOW_CREDENTIALS = True  # 允许携带cookie
@@ -169,9 +173,11 @@ SIMPLEUI_ICON = {
     '导演': 'fas fa-user-tie',
     '演员': 'fas fa-masks-theater',
     '电影': 'fas fa-film',
-    '电影类型': 'fas fa-atom',
+    '电影类型': 'fas fa-tags',
     '电影语言': 'fas fa-language',
 
     '认证令牌': 'fas fa-user-lock',
     'Tokens': 'fas fa-key',
+
+    '用户': 'fas fa-user',
 }

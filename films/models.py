@@ -6,7 +6,7 @@ class Film(models.Model):
     duration = models.PositiveIntegerField()
     release_date = models.DateField()
     info = models.TextField()
-    cover = models.ImageField(upload_to='static/image/covers/', null=True, blank=True)
+    cover = models.ImageField(upload_to='covers/', null=True, blank=True)
     tags = models.ManyToManyField('Tag', related_name='films')
     directors = models.ManyToManyField('Director', related_name='films')
     actors = models.ManyToManyField('Actor', related_name='films')
@@ -35,7 +35,7 @@ class Tag(models.Model):
 class Director(models.Model):
     name = models.CharField(max_length=255)
     # 照片
-    photo = models.ImageField(upload_to='static/image/directors/', null=True, blank=True)
+    photo = models.ImageField(upload_to='directors/', null=True, blank=True)
     # 出生日期
     birth_date = models.DateField(null=True, blank=True)
     # 出生地
@@ -54,7 +54,7 @@ class Director(models.Model):
 class Actor(models.Model):
     name = models.CharField(max_length=255)
     # 照片
-    photo = models.ImageField(upload_to='static/image/directors/', null=True, blank=True)
+    photo = models.ImageField(upload_to='actors/', null=True, blank=True)
     # 出生日期
     birth_date = models.DateField(null=True, blank=True)
     # 出生地
