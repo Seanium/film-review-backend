@@ -12,6 +12,10 @@ class Favorite(models.Model):
     film = models.ForeignKey(Film, on_delete=models.CASCADE)
     time = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        verbose_name = '收藏电影'
+        verbose_name_plural = '收藏电影'
+
     def __str__(self):
         return self.user.username + ' - ' + self.film.name + ' - ' + str(self.time)
 
@@ -28,6 +32,10 @@ class Review(models.Model):
     # 看过与否，分为0,1两个等级，0表示未看过，1表示已看过
     watched = models.PositiveIntegerField(validators=[MinValueValidator(0), MaxValueValidator(1)])
 
+    class Meta:
+        verbose_name = '短影评'
+        verbose_name_plural = '短影评'
+
     def __str__(self):
         return self.user.username + ' - ' + self.film.name + ' - ' + str(self.time)
 
@@ -39,6 +47,10 @@ class ReviewLike(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     review = models.ForeignKey(Review, on_delete=models.CASCADE)
     time = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = '点赞短影评'
+        verbose_name_plural = '点赞短影评'
 
     def __str__(self):
         return self.user.username + ' - ' + self.review.content + ' - ' + str(self.time)
@@ -52,6 +64,10 @@ class ReviewComment(models.Model):
     review = models.ForeignKey(Review, on_delete=models.CASCADE)
     content = models.TextField()
     time = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = '评论短影评'
+        verbose_name_plural = '评论短影评'
 
     def __str__(self):
         return self.user.username + ' - ' + self.review.content + ' - ' + str(self.time)
@@ -75,6 +91,10 @@ class Article(models.Model):
     content = models.TextField()
     time = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        verbose_name = '长影评'
+        verbose_name_plural = '长影评'
+
     def __str__(self):
         return self.user.username + ' - ' + self.film.name + ' - ' + str(self.time)
 
@@ -86,6 +106,10 @@ class ArticleLike(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
     time = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = '点赞长影评'
+        verbose_name_plural = '点赞长影评'
 
     def __str__(self):
         return self.user.username + ' - ' + self.article.content + ' - ' + str(self.time)
@@ -99,6 +123,10 @@ class ArticleComment(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
     content = models.TextField()
     time = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = '评论长影评'
+        verbose_name_plural = '评论长影评'
 
     def __str__(self):
         return self.user.username + ' - ' + self.article.content + ' - ' + str(self.time)

@@ -29,6 +29,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'simpleui',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,7 +45,7 @@ INSTALLED_APPS = [
     'films',
     'reviews',
     'corsheaders',
-    'import_export'
+    'import_export',
 ]
 
 MIDDLEWARE = [
@@ -60,7 +61,7 @@ MIDDLEWARE = [
 
 # 静态文件
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR,'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # 跨域
 CORS_ORIGIN_ALLOW_ALL = True  # 允许所有的请求源
@@ -144,4 +145,33 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
     ],
+}
+
+SIMPLEUI_HOME_INFO = False
+
+# SIMPLEUI_LOGO = 'https://www.django-rest-framework.org/img/logo.png'
+
+SIMPLEUI_ICON = {
+    '影评管理': 'fas fa-newspaper',
+    '收藏电影': 'fas fa-star',
+    '点赞短影评': 'fas fa-thumbs-up',
+    '点赞长影评': 'fas fa-thumbs-up',
+    '短影评': 'fas fa-comment-dots',
+    '评论短影评': 'fas fa-comments',
+    '评论长影评': 'fas fa-comments',
+    '长影评': 'fas fa-newspaper',
+
+    '用户管理': 'fas fa-user-group',
+    '用户信息': 'fas fa-portrait',
+
+    '电影管理': 'fas fa-film',
+    '制片国家/地区': 'fas fa-globe',
+    '导演': 'fas fa-user-tie',
+    '演员': 'fas fa-masks-theater',
+    '电影': 'fas fa-film',
+    '电影类型': 'fas fa-atom',
+    '电影语言': 'fas fa-language',
+
+    '认证令牌': 'fas fa-user-lock',
+    'Tokens': 'fas fa-key',
 }

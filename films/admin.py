@@ -4,6 +4,10 @@ from import_export.admin import ImportExportModelAdmin
 
 from films.models import *
 
+admin.site.site_header = '影评网站管理后台'  # 设置header
+admin.site.site_title = '影评网站管理后台'  # 设置title
+admin.site.index_title = '影评网站管理后台'
+
 
 # Register your models here.
 class FilmResource(resources.ModelResource):

@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from rest_framework import generics
 from rest_framework.generics import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -32,26 +33,16 @@ class RegisterAPIView(APIView):
         return Response(serializer.errors, status=400)
 
 
-class UserProfileView(APIView):
+class UserProfileView(generics.RetrieveUpdateAPIView):
     """
-    用户信息
+    用户信息的获取和更新。
     """
+    queryset = UserProfile.objects.all()
+    serializer_class = UserProfileSerializer
 
-    def get(self, request, pk):
+    def get_object(self):
         """
-        获取用户信息
+        获取用户信息。
         """
-        profile = get_object_or_404(UserProfile, user=pk)
-        serializer = UserProfileSerializer(profile)
-        return Response(serializer.data)
-
-    def post(self, request, pk):
-        """
-        更新用户信息。
-        """
-        profile = get_object_or_404(UserProfile, user=pk)
-        serializer = UserProfileSerializer(profile, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=400)
+        pk = self.kwargs.get('pk')
+        return get_object_or_404(UserProfile, user=pk)

@@ -13,12 +13,20 @@ class Film(models.Model):
     language = models.ForeignKey('Language', on_delete=models.CASCADE, related_name='films')
     country = models.ForeignKey('Country', on_delete=models.CASCADE, related_name='films')
 
+    class Meta:
+        verbose_name = '电影'
+        verbose_name_plural = '电影'
+
     def __str__(self):
         return self.name
 
 
 class Tag(models.Model):
     name = models.CharField(max_length=255, unique=True)
+
+    class Meta:
+        verbose_name = '电影类型'
+        verbose_name_plural = '电影类型'
 
     def __str__(self):
         return self.name
@@ -35,6 +43,10 @@ class Director(models.Model):
     # 简介
     info = models.TextField()
 
+    class Meta:
+        verbose_name = '导演'
+        verbose_name_plural = '导演'
+
     def __str__(self):
         return self.name
 
@@ -50,6 +62,10 @@ class Actor(models.Model):
     # 简介
     info = models.TextField()
 
+    class Meta:
+        verbose_name = '演员'
+        verbose_name_plural = '演员'
+
     def __str__(self):
         return self.name
 
@@ -58,16 +74,21 @@ class Actor(models.Model):
 class Language(models.Model):
     name = models.CharField(max_length=255, unique=True)
 
+    class Meta:
+        verbose_name = '电影语言'
+        verbose_name_plural = '电影语言'
+
     def __str__(self):
         return self.name
 
 
 # 出版国家
 class Country(models.Model):
-    class Meta:
-        verbose_name_plural = 'Countries'
-
     name = models.CharField(max_length=255, unique=True)
+
+    class Meta:
+        verbose_name = '制片国家/地区'
+        verbose_name_plural = '制片国家/地区'
 
     def __str__(self):
         return self.name

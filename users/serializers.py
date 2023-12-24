@@ -44,5 +44,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
         instance.age = validated_data.get('age', instance.age)
         instance.email = validated_data.get('email', instance.email)
         instance.location = validated_data.get('location', instance.location)
+        instance.hobby = validated_data.get('hobby', instance.hobby)
         instance.save()
         return instance
