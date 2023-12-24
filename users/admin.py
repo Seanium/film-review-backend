@@ -20,3 +20,14 @@ class UserProfileAdmin(ImportExportModelAdmin):
     search_fields = ('user', 'nickname', 'gender', 'phone', 'occupation', 'signature', 'age', 'email',
                      'location', 'hobby')
     resource_class = UserProfileResource
+
+
+@admin.register(admin.models.LogEntry)
+class LogEntryAdmin(admin.ModelAdmin):
+    list_display = ('id', 'action_time', 'user', 'content_type', 'object_id', 'object_repr', 'action_flag',
+                    'change_message')
+    list_filter = ('action_time', 'user', 'content_type')
+    search_fields = (
+        'user__username', 'content_type__model', 'object_id', 'object_repr', 'action_flag', 'change_message')
+    readonly_fields = (
+        'action_time', 'user', 'content_type', 'object_id', 'object_repr', 'action_flag', 'change_message')

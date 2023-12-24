@@ -180,4 +180,6 @@ SIMPLEUI_ICON = {
     'Tokens': 'fas fa-key',
 
     '用户': 'fas fa-user',
+
+    '日志记录': 'fas fa-book',
 }
